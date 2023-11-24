@@ -17,8 +17,11 @@ export function reducer(state: State, action: Action) {
 
   if (type === 'ITERCHANGE_LANGUAGES') {
     if (state.fromLanguage === AUTO_LANGUAGE) return state
+    const loading = state.fromText
     return {
       ...state,
+      loading,
+      result: '',
       fromLanguage: state.toLanguage,
       toLanguage: state.fromLanguage,
     }

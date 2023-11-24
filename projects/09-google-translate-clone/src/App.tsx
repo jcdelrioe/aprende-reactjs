@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Stack } from 'react-bootstrap'
 import './App.css'
 import { useStore } from './hooks/useStore'
 import { AUTO_LANGUAGE } from './constants'
-import { ArrowsIcon } from './components/Icons'
+import { ArrowsIcon, ClipboardIcon, SpeakerIcon } from './components/Icons'
 import { LanguageSelector } from './components/LanguageSelector'
 import { SectionType } from './types.d'
 import { TextArea } from './components/TextArea'
@@ -25,7 +25,7 @@ function App() {
     interchangeLanguages,
   } = useStore()
 
-  const debouncedFromText = useDebounce(fromText, 400)
+  const debouncedFromText = useDebounce(fromText, 800)
 
   useEffect(() => {
     if (debouncedFromText === '') return
@@ -37,6 +37,16 @@ function App() {
       }
     )
   }, [fromText, fromLanguage, toLanguage])
+
+  const handleClipboard = () => {
+    navigator.clipboard.writeText(result).catch(() => {})
+  }
+
+  const handleSpeak = () => {
+    const utterance = new SpeechSynthesisUtterance(result)
+    utterance.lang = toLanguage
+    speechSynthesis.speak(utterance)
+  }
 
   return (
     <>
@@ -74,12 +84,29 @@ function App() {
                 value={toLanguage}
                 onChange={setToLanguage}
               />
-              <TextArea
-                loading={loading}
-                type={SectionType.To}
-                value={result}
-                onChange={setResult}
-              />
+              <div style={{ position: 'relative' }}>
+                <TextArea
+                  loading={loading}
+                  type={SectionType.To}
+                  value={result}
+                  onChange={setResult}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '0',
+                    bottom: '0',
+                    display: 'flex',
+                  }}
+                >
+                  <Button variant='link' onClick={handleClipboard}>
+                    <ClipboardIcon />
+                  </Button>
+                  <Button variant='link' onClick={handleSpeak}>
+                    <SpeakerIcon />
+                  </Button>
+                </div>
+              </div>
             </Stack>
           </Col>
         </Row>

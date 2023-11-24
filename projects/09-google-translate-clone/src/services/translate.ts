@@ -3,6 +3,9 @@ import {
   Configuration,
   OpenAIApi,
 } from 'openai'
+
+// import OpenAI from 'openai'
+
 import { SUPPORTED_LANGUAGES } from '../constants'
 import { type FromLanguage, type Language } from '../types.d'
 
@@ -11,6 +14,19 @@ import { type FromLanguage, type Language } from '../types.d'
 // EN REACT y TYPESCRIPT
 // DEBES CREAR UNA API PARA ESTO
 const apiKey = import.meta.env.VITE_OPENAI_API_KEY
+
+// const openai = new OpenAI({ apiKey })
+
+// async function UsandoAPI() {
+//   const params: OpenAI.Chat.ChatCompletionCreateParams = {
+//     messages: [{ role: 'user', content: 'Say this is a test' }],
+//     model: 'gpt-3.5-turbo',
+//   }
+//   const chatCompletion: OpenAI.Chat.ChatCompletion =
+//     await openai.chat.completions.create(params)
+// }
+
+// UsandoAPI()
 
 const configuration = new Configuration({ apiKey })
 const openai = new OpenAIApi(configuration)
