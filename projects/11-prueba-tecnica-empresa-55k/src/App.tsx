@@ -42,6 +42,7 @@ function App() {
 
     return filteredUsers.toSorted((a, b) => {
       const extractProperty = compareProperties[sorting]
+
       return extractProperty(a).localeCompare(extractProperty(b))
     })
   }, [filteredUsers, sorting])
